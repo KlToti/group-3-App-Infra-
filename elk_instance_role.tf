@@ -1,11 +1,11 @@
-resource "aws_iam_instance_profile" "logstash_instance_profile" {
-  name = "logs_profile"
-  role = aws_iam_role.logs_role.name
+resource "aws_iam_instance_profile" "elk_instance_profile" {
+  name = "elk_instance_profile"
+  role = aws_iam_role.elk_role.name
 }
 
 
-resource "aws_iam_role" "logs_role" {
-  name = "logs_role"
+resource "aws_iam_role" "elk_role" {
+  name = "elk_role"
 
   assume_role_policy = <<EOF
   {
@@ -19,8 +19,8 @@ resource "aws_iam_role" "logs_role" {
 EOF
 }
 
-resource "aws_iam_role_policy_attachment" "logs_attach" {
-  role       = aws_iam_role.logs_role.name
+resource "aws_iam_role_policy_attachment" "elk_attach" {
+  role       = aws_iam_role.elk_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
 
