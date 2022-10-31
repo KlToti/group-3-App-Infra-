@@ -7,8 +7,8 @@ resource "aws_instance" "elasticSearch_ec2" {
         device_name = "elasticSearch-ebs"
         volume_size = "50"
     }
-    security_groups = [aws_security_group.elasticSearch_sg.id]
-    iam_instance_profile = data.aws_iam_instance_profile.ssm_instance_profile.name
+    vpc_security_group_ids = [aws_security_group.elasticSearch_sg.id]
+    iam_instance_profile = aws_iam_instance_profile.elk_instance_profile.name
 }
 resource "aws_security_group" "elasticSearch_sg" {
   name        = "ElasticSearch_sg"
