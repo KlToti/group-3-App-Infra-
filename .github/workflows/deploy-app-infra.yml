@@ -1,4 +1,4 @@
-name: Deployment for VPC
+name: Deployment for Application Infrastructure
 on: [push]
 jobs:
   runs-on: ubuntu-lastest
