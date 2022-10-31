@@ -12,12 +12,13 @@ resource "aws_iam_role" "elk_role" {
     "Version": "2012-10-17",
     "Statement": {
       "Effect": "Allow",
-      "Principal": {"Service": "ssm.amazonaws.com"},
+      "Principal": {"Service": "ec2.amazonaws.com"},
       "Action": "sts:AssumeRole"
     }
   }
 EOF
 }
+
 
 resource "aws_iam_role_policy_attachment" "elk_attach" {
   role       = aws_iam_role.elk_role.name
