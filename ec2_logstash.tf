@@ -5,8 +5,8 @@ resource "aws_security_group" "logstash_sg" {
 
   ingress {
     description      = "for access of Beats"
-    from_port        = 5033 #difference from 5044
-    to_port          = 5033
+    from_port        = 5044                     #changed from 5033 discrepancy in Trello cards
+    to_port          = 5044
     protocol         = "tcp"
     cidr_blocks      = [data.aws_subnet.private_subnet.cidr_block]
   }
@@ -36,12 +36,9 @@ resource "aws_instance" "logstash_ec2" {
     instance_type = "t3.micro"
     subnet_id = data.aws_subnet.private_subnet.id
     ebs_block_device  {
-        device_name = "logstash-ebs"
+        device_name = "/dev/xvdba"
         volume_size = "50"
     }
     security_groups = [aws_security_group.logstash_sg.id]
-#    iam_instance_profile = data.aws_iam_instance_profile.ssm_instance_profile.name
+    iam_instance_profile = aws_iam_instance_profile.elk_instance_profile.name
 }
-
-
-
