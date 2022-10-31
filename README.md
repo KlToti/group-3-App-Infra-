@@ -18,3 +18,49 @@ For more [reference, click here](https://aws.amazon.com/opensearch-service/the-e
 ![alt text](https://github.com/KlToti/group-3-Network/blob/main/pics/082918_1504_ELKStackTut2.webp)
 
 [Pic reference](https://www.guru99.com/elk-stack-tutorial.html)
+
+<!-- BEGIN_TF_DOCS -->
+## Requirements
+
+No requirements.
+
+## Providers
+
+| Name | Version |
+|------|---------|
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 4.37.0 |
+
+## Modules
+
+No modules.
+
+## Resources
+
+| Name | Type |
+|------|------|
+| [aws_iam_instance_profile.elk_instance_profile](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_instance_profile) | resource |
+| [aws_iam_role.elk_role](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role) | resource |
+| [aws_iam_role_policy_attachment.elk_attach](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/iam_role_policy_attachment) | resource |
+| [aws_instance.elasticSearch_ec2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance) | resource |
+| [aws_instance.logstash_ec2](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/instance) | resource |
+| [aws_security_group.elasticSearch_sg](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
+| [aws_security_group.logstash_sg](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/resources/security_group) | resource |
+| [aws_ami.ubuntu](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/ami) | data source |
+| [aws_subnet.private_subnet](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/subnet) | data source |
+| [aws_subnet.public_subnet](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/subnet) | data source |
+| [aws_vpc.elk_vpc](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/vpc) | data source |
+
+## Inputs
+
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_ami_owner"></a> [ami\_owner](#input\_ami\_owner) | ID of AMI owner | `string` | n/a | yes |
+| <a name="input_private_subnet_name"></a> [private\_subnet\_name](#input\_private\_subnet\_name) | tag Name of created private subnet in group-3-Network | `string` | n/a | yes |
+| <a name="input_public_subnet_name"></a> [public\_subnet\_name](#input\_public\_subnet\_name) | tag Name of created public subnet in group-3-Network | `string` | n/a | yes |
+| <a name="input_ubuntu_version"></a> [ubuntu\_version](#input\_ubuntu\_version) | version of ubuntu | `string` | n/a | yes |
+| <a name="input_vpc_name"></a> [vpc\_name](#input\_vpc\_name) | tag Name of created VPC in group-3-Network | `string` | n/a | yes |
+
+## Outputs
+
+No outputs.
+<!-- END_TF_DOCS -->
