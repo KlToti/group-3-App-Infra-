@@ -4,11 +4,14 @@ resource "aws_instance" "elasticSearch_ec2" {
     instance_type = "t3.medium"
     subnet_id = data.aws_subnet.private_subnet.id
     ebs_block_device  {
-        device_name = "elasticSearch-ebs"
+        device_name = "/dev/xvdba"
         volume_size = "50"
     }
     vpc_security_group_ids = [aws_security_group.elasticSearch_sg.id]
     iam_instance_profile = aws_iam_instance_profile.elk_instance_profile.name
+    tags = {
+      Name = "elasticSearch_server"
+  }
 }
 resource "aws_security_group" "elasticSearch_sg" {
   name        = "ElasticSearch_sg"
