@@ -50,7 +50,6 @@ resource "aws_instance" "logstash_ec2" {
     }
     vpc_security_group_ids = [aws_security_group.logstash_sg.id]
     iam_instance_profile = aws_iam_instance_profile.elk_instance_profile.name
-    #user_data = filebase64("${path.module}/ssm-agent-install.sh")
 
     tags = {
     Name = "logstash_server"
