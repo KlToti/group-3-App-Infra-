@@ -18,7 +18,6 @@ resource "aws_security_group" "kibana_sg" {
   vpc_id      = data.aws_vpc.elk_vpc.id
 
   ingress {
-    description = "ingress rules"
     cidr_blocks = [ "0.0.0.0/0" ]
     from_port = 5601
     to_port = 5601
@@ -35,4 +34,3 @@ resource "aws_security_group" "kibana_sg" {
     Name = "kibana_sg"
   }
 }
-
