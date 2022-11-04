@@ -2,7 +2,7 @@ resource "aws_instance" "elasticSearch_ec2" {
     ami = data.aws_ami.ubuntu.id
     #instance type valued as specified in the ticket
     instance_type = "t3.medium"
-    subnet_id = data.aws_subnet.public_subnet.id
+    subnet_id = data.aws_subnet.private_subnet.id
     ebs_block_device  {
         device_name = "/dev/xvdba"
         volume_size = "50"
