@@ -40,7 +40,7 @@ filebeat.config.modules:
 # ------------------------------ Logstash Output -------------------------------
 
 output.logstash:
-    hosts: ["3.76.35.53:5044"]
+    hosts: ["${LOGSTASH_IP:5044}"]
     loadbalance: true
     ssl.enabled: true
 
@@ -52,6 +52,7 @@ processors:
   - add_docker_metadata: ~
   - add_kubernetes_metadata: ~
 EOT
+
 cp ~/filebeat.yml /var/log/filebeat.yml
 
 

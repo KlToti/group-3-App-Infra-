@@ -32,7 +32,7 @@ setup.template.settings:
 # ------------------------------ Logstash Output -------------------------------
 
 output.logstash:
-  hosts: ["3.76.35.53:5044"]
+  hosts: ["${LOGSTASH_IP}:5044"]
   loadbalance: true
   ssl.enabled: true
 
