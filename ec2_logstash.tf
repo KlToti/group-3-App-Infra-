@@ -11,7 +11,6 @@ resource "aws_security_group" "logstash_sg" {
     cidr_blocks      = ["0.0.0.0/0"]
   }
 
-
   ingress {
     description      = "for access of Beats"
     from_port        = 5044                     #changed from 5033 discrepancy in Trello cards
@@ -42,10 +41,10 @@ resource "aws_security_group" "logstash_sg" {
 
 resource "aws_instance" "logstash_ec2" {
     ami = data.aws_ami.ubuntu.id
+    key_name = "group3-ec2"
     instance_type = "t3.medium"
     subnet_id = data.aws_subnet.private_subnet.id
-    ebs_block_device  {
-        device_name = "/dev/xvdba"
+    root_block_device  {
         volume_size = "50"
     }
     vpc_security_group_ids = [aws_security_group.logstash_sg.id]
