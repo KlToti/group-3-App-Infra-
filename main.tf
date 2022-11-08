@@ -1,10 +1,19 @@
 data "aws_ami" "ubuntu" {
   most_recent = true
   filter {
-    name = "name"
+    name   = "name"
     values = [var.ubuntu_version]
   }
   owners = [var.ami_owner] # Canonical
+}
+
+data "aws_ami" "kibana_on_ubuntu" {
+  most_recent = true
+  filter {
+    name   = "name"
+    values = [var.kibana_ubuntu_version]
+  }
+  owners = [var.kibana_ami_owner] # Canonical
 }
 
 #data "amazon-ami" "ubuntu" {
