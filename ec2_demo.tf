@@ -38,9 +38,9 @@ resource "aws_instance" "filebeat_ec2" {
 
     vpc_security_group_ids = [aws_security_group.beats_sg.id]
     iam_instance_profile = aws_iam_instance_profile.elk_instance_profile.name
-    user_data=templatefile("${path.module}/user-data-filebeat.sh",
+    user_data=templatefile("${path.module}/user-data-filebeat.sh.tpl",
           {
-            LOGSTASH_IP = aws_instance.logstash_ec2.ip
+            LOGSTASH_IP = aws_instance.logstash_ec2.private_ip
           })
     tags = {
     Name = "filebeat_server"
@@ -57,7 +57,7 @@ resource "aws_instance" "metricbeat_ec2" {
     iam_instance_profile = aws_iam_instance_profile.elk_instance_profile.name
     user_data=templatefile("${path.module}/user-data-metricbeat.sh.tpl",
           {
-            LOGSTASH_IP = aws_instance.logstash_ec2.ip
+            LOGSTASH_IP = aws_instance.logstash_ec2.private_ip
           })
 
     tags = {
