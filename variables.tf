@@ -22,3 +22,13 @@ variable "ami_owner" {
     description = "ID of AMI owner"
     type = string
 }
+
+variable "kibana_ubuntu_version" {
+    description = "version of ubuntu"
+    type = string
+}
+
+variable "kibana_ami_owner" {
+    description = "ID of AMI owner"
+    type = string
+}
