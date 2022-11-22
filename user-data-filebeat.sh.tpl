@@ -1,4 +1,4 @@
-#!bin/bash
+#!/bin/bash
 
 #export AWS_PROFILE=final-project
 #export AWS_DEFAULT_REGION=eu-central-1
@@ -7,12 +7,12 @@
 # https://logit.io/sources/configure/filebeat/
 
 # 1. Install Filebeat
-curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-oss-7.15.1-amd64.deb
-sudo dpkg -i filebeat-oss-7.15.1-amd64.deb
+
+
 
 # 2. Copy configuration file
 cd ~
-cat <<EOT >> filebeat.yml
+sudo cat <<EOT >> filebeat.yml
 # ============================== Filebeat inputs ==============================
 filebeat.inputs:
 
@@ -23,7 +23,7 @@ filebeat.inputs:
 
   # Paths to send data from
   paths:
-  - [/var/log/keybagd.log]
+  - ["/var/log/syslog*"]
 # ============================== Filebeat modules ==============================
 
 filebeat.config.modules:
@@ -35,6 +35,14 @@ filebeat.config.modules:
 
   # Period on which files under path should be checked for changes
   #reload.period: 10s
+
+- module: system
+  syslog:
+    enabled: true
+    var.paths: ["/path/to/log/syslog*"]
+  auth:
+    enabled: true
+    var.paths: ["/path/to/log/auth.log*"]
 
 # ================================== Outputs ===================================
 # ------------------------------ Logstash Output -------------------------------
@@ -53,8 +61,7 @@ processors:
   - add_kubernetes_metadata: ~
 EOT
 
-cp ~/filebeat.yml /var/log/filebeat.yml
-
+sudo cp ~/filebeat.yml /var/log/filebeat.yml
 
 # 3. Start Filebeat
 sudo systemctl enable filebeat
