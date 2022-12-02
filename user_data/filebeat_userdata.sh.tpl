@@ -1,34 +1,31 @@
-#!bin/bash
+#!/bin/bash -x
 
-#export AWS_PROFILE=final-project
-#export AWS_DEFAULT_REGION=eu-central-1
-
-# Use Debian
-# https://logit.io/sources/configure/filebeat/
-
+# needs review
 # 1. Install Filebeat
-curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-oss-7.15.1-amd64.deb
-sudo dpkg -i filebeat-oss-7.15.1-amd64.deb
+
+wget -qO - https://artifacts.elastic.co/GPG-KEY-elasticsearch | sudo apt-key add -
+sudo apt-get install apt-transport-https
+echo "deb https://artifacts.elastic.co/packages/8.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-8.x.list
+sudo apt-get update && sudo apt-get install filebeat
+sudo systemctl enable filebeat
 
 # 2. Copy configuration file
-cd ~
-cat <<EOT >> filebeat.yml
+
+cat <<EOT >> ~/filebeat.yml
 # ============================== Filebeat inputs ==============================
 filebeat.inputs:
-
 - type: log
-
   # Change to true to enable this input configuration.
   enabled: true
 
   # Paths to send data from
   paths:
-  - [/var/log/keybagd.log]
+  - ["/var/log/*.log"]
 # ============================== Filebeat modules ==============================
 
 filebeat.config.modules:
   # Glob pattern for configuration loading
-  path: $${path.config}/modules.d/*.yml
+  path: ${path.config}/modules.d/*.yml
 
   # Set to true to enable config reloading
   reload.enabled: false
@@ -40,21 +37,19 @@ filebeat.config.modules:
 # ------------------------------ Logstash Output -------------------------------
 
 output.logstash:
-    hosts: ["$${LOGSTASH_IP:5044}"]
-    loadbalance: true
-    ssl.enabled: true
+    hosts: ["{LOGSTASH_IP:5044}"]
+    #loadbalance: true
+    #ssl.enabled: true
 
-# ================================= Processors =================================
-processors:
-  - add_host_metadata:
-      when.not.contains.tags: forwarded
-  - add_cloud_metadata: ~
-  - add_docker_metadata: ~
-  - add_kubernetes_metadata: ~
+# logging
+logging.level: debug
 EOT
 
-cp ~/filebeat.yml /var/log/filebeat.yml
+# replace with Logstash IP address
+sed -i "s/LOGSTASH_IP/${logstash_ip}/g" ~/filebeat.yml
 
+# copy to configuration folder
+sudo cp ~/filebeat.yml /etc/filebeat/filebeat.yml
 
 # 3. Start Filebeat
 sudo systemctl enable filebeat
