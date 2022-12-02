@@ -9,7 +9,7 @@ sudo apt-get install apt-transport-https
 echo "deb https://artifacts.elastic.co/packages/8.x/apt stable main" | sudo tee -a /etc/apt/sources.list.d/elastic-8.x.list
 sudo apt-get update && sudo apt-get install metricbeat
 sudo systemctl enable metricbeat
-sudo update-rc.d metricbeat defaults 95 10
+#sudo update-rc.d metricbeat defaults 95 10
 # sudo service metricbeat start
 
 # 2. Copy configuration file
