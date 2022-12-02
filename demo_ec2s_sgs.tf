@@ -1,7 +1,7 @@
 resource "aws_instance" "filebeat_ec2" {
-  ami           = data.aws_ami.ubuntu.id
-  instance_type = "t3.small"
-  subnet_id     = data.aws_subnet.private_subnet.id
+  ami                    = data.aws_ami.ubuntu.id
+  instance_type          = "t3.small"
+  subnet_id              = data.aws_subnet.private_subnet.id
   vpc_security_group_ids = [aws_security_group.beats_sg.id]
   iam_instance_profile   = aws_iam_instance_profile.elk_instance_profile.name
   user_data = templatefile("${path.module}/user-data-filebeat.sh.tpl",
@@ -15,9 +15,9 @@ resource "aws_instance" "filebeat_ec2" {
 }
 
 resource "aws_instance" "metricbeat_ec2" {
-  ami           = data.aws_ami.ubuntu.id
-  instance_type = "t3.small"
-  subnet_id     = data.aws_subnet.private_subnet.id
+  ami                    = data.aws_ami.ubuntu.id
+  instance_type          = "t3.small"
+  subnet_id              = data.aws_subnet.private_subnet.id
   vpc_security_group_ids = [aws_security_group.beats_sg.id]
   iam_instance_profile   = aws_iam_instance_profile.elk_instance_profile.name
   user_data = templatefile("${path.module}/user-data-metricbeat.sh.tpl",

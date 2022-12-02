@@ -17,7 +17,7 @@ resource "aws_security_group" "elasticSearch_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
   tags = {
-    Name = "elasticSearch_sg"
+    Name    = "elasticSearch_sg"
     Project = "ELK-final-project"
   }
 }
@@ -29,7 +29,7 @@ resource "aws_security_group" "logstash_sg" {
 
   ingress {
     description = "for access of Beats"
-    from_port   = 5044 
+    from_port   = 5044
     to_port     = 5044
     protocol    = "tcp"
     cidr_blocks = [data.aws_subnet.private_subnet.cidr_block]
@@ -48,7 +48,7 @@ resource "aws_security_group" "logstash_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
   tags = {
-    Name = "logstash_sg"
+    Name    = "logstash_sg"
     Project = "ELK-final-project"
   }
 }
@@ -70,7 +70,7 @@ resource "aws_security_group" "kibana_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
   tags = {
-    Name = "kibana_sg"
+    Name    = "kibana_sg"
     Project = "ELK-final-project"
   }
 }
