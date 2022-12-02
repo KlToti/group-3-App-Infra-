@@ -16,14 +16,23 @@ data "aws_ami" "kibana_on_ubuntu" {
   owners = [var.kibana_ami_owner] # Canonical
 }
 
-#data "amazon-ami" "ubuntu" {
-#        filters = {
-#            name = var.source_ami_name
-#            }
-#        owners = [var.ami_owner]
-#        most_recent = true
-#    }
+data "aws_vpc" "elk_vpc" {
+  filter {
+    name   = "tag:Name"
+    values = [var.vpc_name]
+  }
+}
 
-# data "aws_iam_instance_profile" "ssm_instance_profile" {
-#     name = "ssm_instance_profile"
-# }
+data "aws_subnet" "public_subnet" {
+  filter {
+    name   = "tag:Name"
+    values = [var.public_subnet_name]
+  }
+}
+
+data "aws_subnet" "private_subnet" {
+  filter {
+    name   = "tag:Name"
+    values = [var.private_subnet_name]
+  }
+}

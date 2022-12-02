@@ -3,7 +3,6 @@ resource "aws_iam_instance_profile" "elk_instance_profile" {
   role = aws_iam_role.elk_role.name
 }
 
-
 resource "aws_iam_role" "elk_role" {
   name = "elk_role"
 
@@ -18,7 +17,6 @@ resource "aws_iam_role" "elk_role" {
   }
 EOF
 }
-
 
 resource "aws_iam_role_policy_attachment" "elk_attach" {
   role       = aws_iam_role.elk_role.name
